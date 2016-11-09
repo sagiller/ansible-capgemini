@@ -1,0 +1,22 @@
+- name: install java
+  yum: name=java-1.7.0-openjdk state=present
+- name: group
+  group: name=tomcat
+- name: user
+  user: name=tomcat group=tomcat home=/usr/tomcat
+  sudo: True
+- name: copy tomcat_tar_gz
+  copy: src=apache-tomcat-7.0.65.tar.gz dest=/tmp/apache-tomcat-7.0.65.tar.gz
+- name: Extract archive
+  command: /bin/tar xf /tmp/apache-tomcat-7.0.65.tar.gz -C /opt/
+- name: Symlink install directory
+  file: src=/opt/apache-tomcat-7.0.65/ dest=/usr/share/tomcat state=link
+- name: Change ownership of Tomcat installation
+  file: path=/usr/share/tomcat/ owner=tomcat group=tomcat state=directory recurse=yes
+- name: Configure Tomcat users
+  template: src=tomcat-users.xml dest=/usr/share/tomcat/conf/
+  notify: restart tomcat
+- name: Install Tomcat init script
+  copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes

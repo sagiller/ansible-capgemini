@@ -1,0 +1,7 @@
+- hosts: ubuntuServers
+  remote_user: root
+  roles:
+    - nginx
+    - mysql
+    - tomcat
+    - db

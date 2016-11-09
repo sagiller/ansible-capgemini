@@ -1,0 +1,7 @@
+---
+- name: create db
+  mysql_db: name=student state=present login_password=bingoclo123 login_user=root login_unix_socket=/data/mysql/data/mysql.sock
+- name: copy sql file
+  copy: src=stu.sql dest=/tmp
+- name: import sql
+  mysql_db: name=student state=import target=/tmp/stu.sql login_password=bingoclo123 login_user=root login_unix_socket=/data/mysql/data/mysql.sock

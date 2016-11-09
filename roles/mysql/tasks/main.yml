@@ -1,0 +1,6 @@
+- name: copy mysql_tar_gz to client
+  copy: src=mysql-5.6.27.tar.gz dest=/tmp/mysql-5.6.27.tar.gz
+- name: copy install_script to client
+  copy: src=mysql_install.sh dest=/tmp/mysql_install.sh owner=root group=root mode=755
+- name: install mysql
+  shell: /bin/bash /tmp/mysql_install.sh
