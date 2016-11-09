@@ -1,0 +1,4 @@
+
+- hosts: ubuntuServers
+  roles:
+     - sprylab.tomcat-ubuntu
